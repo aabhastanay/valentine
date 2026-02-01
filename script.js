@@ -16,26 +16,43 @@ function goYes() {
   window.location.href = "gifts.html";
 }
 
-// ---------------- PAGE 2 ----------------
+// ---------------- PAGE 2 (GIFTS) ----------------
 let revealsLeft = 3;
 
+// Original gifts
 const gifts = [
   "A surprise date 💕",
-  "Something sparkly ✨",
+  "Something you’ll love ✨",
   "A cozy hoodie 🧥",
   "Chocolate overload 🍫",
   "A handwritten letter 💌",
-  "A mystery box 🎁",
-  "A candlelit dinner 🕯️",
+  "An exotic snack 🍪",
+  "A lovely perfume 🌸",
   "A plushie 🧸",
-  "Something you’ll love 😘"
+  "Dealer's choice 🤭"
 ];
+
+
+// Shuffle gifts array using Fisher-Yates
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const shuffledGifts = shuffle([...gifts]); // copy & shuffle
+let giftIndex = 0;
 
 function reveal(tile) {
   if (tile.classList.contains("revealed")) return;
   if (revealsLeft === 0) return;
 
-  tile.textContent = gifts[Math.floor(Math.random() * gifts.length)];
+  // Assign next gift in shuffled array
+  tile.textContent = shuffledGifts[giftIndex];
+  giftIndex++;
+
   tile.classList.add("revealed");
 
   revealsLeft--;
